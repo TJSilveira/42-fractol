@@ -8,6 +8,11 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	create_trgb(int t, int r, int g, int b)
+{
+	return(t << 24 | r << 16 | g << 8 | b);
+}
+
 int	main(void)
 {
 	void	*mlx;
@@ -15,7 +20,7 @@ int	main(void)
     int		x;
     int		y;
     t_image	img;
-	long int	color;
+	int	color;
 
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "tsilveir - Fractol implementation");
@@ -23,7 +28,7 @@ int	main(void)
     img.addr = mlx_get_data_addr(img.img, &img.pix_bits, &img.line_len, &img.endian);
 
     x = 0;
-	color = 0x00FFFFFF;
+	color = 0x00FF0000;
     while (++x < 1000)
     {
     	y = 0;
@@ -32,6 +37,7 @@ int	main(void)
 			if (pow(x-200,2) + pow(y-200, 2) <= 4000 && pow(x-200,2) + pow(y-200, 2) >= 3600)
 			{
 				my_mlx_pixel_put(&img, x, y, color);
+				color -= 255*100;
 			}
 		}
     }
