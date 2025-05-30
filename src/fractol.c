@@ -28,6 +28,13 @@ void	next_coor(t_coor *total, t_coor c)
 	total->x = temp_x;
 }
 
+int	add_red(int clr, int i, int total_i)
+{
+	clr = clr & 0xFF00FFFF;
+	clr += 0x00FF0000 * ((double)i / (double)total_i - (double)i);
+	return(clr);
+}
+
 int	fractal_calc(t_coor c)
 {
 	int		i;
@@ -39,13 +46,12 @@ int	fractal_calc(t_coor c)
 	while (i < 50)
 	{
 		next_coor(&total, c);
-		if (pow(total.x,2) + pow(total.y, 2) > 20000)
+		if (pow(total.x,2) + pow(total.y, 2) > 20)
 		{
 			break;
 		}
 		i++;
 	}
-	// printf("x:%f y:%f %i\n", total.x, total.y, i);
 	return (i);
 }
 
@@ -54,6 +60,7 @@ void	update_pixel(t_image *img/*, t_frac f*/)
 	t_pixel		p;
 	t_coor		c;
 	int			w;
+	int			i;
 
 	p.x = 0;
 	w = img->line_len/4;
@@ -64,11 +71,11 @@ void	update_pixel(t_image *img/*, t_frac f*/)
 		{
 			c.y = img->top_left.y + (double)p.y / (double)img->height * (img->bot_right.y - img->top_left.y);
 			c.x = img->top_left.x + (double)p.x / (double)w * (img->bot_right.x - img->top_left.x);
-			// printf("x:%f y:%f\n", c.x, c.y);
-			if (fractal_calc(c) == 50)
-				p.clr = 0xFF00000;
+			i = fractal_calc(c);
+			if (i == 50)
+				p.clr = 0xFF000000;
 			else
-				p.clr = 0x00FFFF00;
+				p.clr = add_red(0x0000FF00, i, 50);
 			my_mlx_pixel_put(img, p.x, p.y, p.clr);
 			p.y += 1;
 		}
