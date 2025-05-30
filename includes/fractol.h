@@ -40,6 +40,8 @@ typedef struct s_engine
 	void	*window;
 }	t_engine;
 
+/* events.c */
+int	close_win(t_engine *engine);
 
 
 #endif

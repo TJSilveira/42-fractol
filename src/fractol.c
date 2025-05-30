@@ -8,12 +8,6 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	close_win(t_engine engine)
-{
-	mlx_destroy_window(engine.mlx,engine.window);
-	return (0);
-}
-
 int	mandelbrot_calc(t_coor zn, t_coor c)
 {
 	int		i;
@@ -71,7 +65,6 @@ int	fractal_choice(t_coor zn, t_coor c, char * choice)
 		return (mandelbrot_calc(zn, c));
 	else if (ft_strcmp(choice, "Julia") == 0)
 		return (julia_calc(zn, c));
-
 	return (0);
 }
 
@@ -133,7 +126,8 @@ int	main(void)
 	update_pixel(&img);
 
 	mlx_put_image_to_window(engine.mlx, engine.window, img.img, 0, 0);
-	mlx_hook(engine.window, 2, 1L<<0, close_win, &engine);
+	mlx_hook(engine.window, 17, 0L, close_win, &engine);
 	mlx_loop(engine.mlx);
+	return (0);
 }
 
