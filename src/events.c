@@ -16,7 +16,7 @@ void	zoom_manager(t_engine *e)
 	y_len = e->img.top_left.y - e->img.bot_right.y;
 	dist = hypot(x_len, y_len);
 	if (dist > 5.0)
-		e->img.iter = 50;
+		e->img.iter = 90;
 	else if (dist > 3.0)
 		e->img.iter = 100;
 	else if (dist > 1.0)
@@ -27,8 +27,10 @@ void	zoom_manager(t_engine *e)
 		e->img.iter = 800;
 	else if (dist > 0.005)
 		e->img.iter = 1600;
-	else
+	else if (dist > 0.0001)
 		e->img.iter = 3200;
+	else
+		e->img.iter = 6400;
 }
 
 int	mouse_wheel(int key, int x, int y, t_engine *e)

@@ -21,10 +21,8 @@ int	mandelbrot_calc(t_coor zn, t_coor c, int iter)
 		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
 		zn.y = 2. * zn.x * zn.y + c.y;
 		zn.x = temp_x;
-		if (pow(zn.x,2) + pow(zn.y, 2) > 20)
-		{
+		if (zn.x * zn.x + zn.y * zn.y > 20)
 			break;
-		}
 		i++;
 	}
 	return (i);
@@ -41,7 +39,27 @@ int	julia_calc(t_coor zn, t_coor c, int iter)
 		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
 		zn.y = 2. * zn.x * zn.y + c.y;
 		zn.x = temp_x;
-		if (pow(zn.x,2) + pow(zn.y, 2) > 20)
+		if (zn.x * zn.x + zn.y * zn.y > 20)
+			break;
+		i++;
+	}
+	return (i);
+}
+
+int	tricorn_calc(t_coor zn, t_coor c, int iter)
+{
+	int		i;
+	double	temp_x;
+	
+	i = 1;
+	zn.x = 0;
+	zn.y = 0;
+	while (i < iter)
+	{
+		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
+		zn.y = -2. * zn.x * zn.y + c.y;
+		zn.x = temp_x;
+		if (zn.x * zn.x + zn.y * zn.y > 20)
 			break;
 		i++;
 	}
@@ -61,6 +79,8 @@ int	fractal_choice(t_coor zn, t_coor c, t_image *img)
 		return (mandelbrot_calc(zn, c, img->iter));
 	else if (img->fractal_type == JULIA)
 		return (julia_calc(zn, img->c_julia, img->iter));
+	else if (img->fractal_type == TRICORN)
+		return (tricorn_calc(zn, c, img->iter));
 	return (0);
 }
 
@@ -139,26 +159,27 @@ void	show_help(void)
 	exit(EXIT_SUCCESS);
 }
 
+void	update_c_julia(t_engine *e, double x, double y)
+{
+	e->img.c_julia.x = x;
+	e->img.c_julia.y = y;
+}
+
 void	fractal_option(t_engine *e, char *argv[], int argc)
 {
-	if (ft_strcmp(argv[1], "mandelbrot") == 0)
+	if (ft_strcmp(argv[1], "mandelbrot") == 0 && argc == 2)
 		e->img.fractal_type = MANDELBROT;
 	else if (ft_strcmp(argv[1], "julia") == 0)
 	{
 		e->img.fractal_type = JULIA;
-		e->img.c_julia.x = -0.4;
-		e->img.c_julia.y = 0.6;
+		update_c_julia(e, -0.4, 0.6);
 		if (argc == 3 && ft_strcmp(argv[2], "1") == 0)
-		{
-			e->img.c_julia.x = -0.8;
-			e->img.c_julia.y = 0.156;
-		}
+			update_c_julia(e, -0.8, 0.156);
 		else if (argc == 3 && ft_strcmp(argv[2], "2") == 0)
-		{
-			e->img.c_julia.x = 0.285;
-			e->img.c_julia.y = 0.01;
-		}
+			update_c_julia(e, 0.285, 0.01);
 	}
+	else if (ft_strcmp(argv[1], "tricorn") == 0 && argc == 2)
+		e->img.fractal_type = TRICORN;
 	else
 	{
 		ft_putstr_fd("Error: Option not available.\n", 2);

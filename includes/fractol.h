@@ -5,6 +5,7 @@
 #include <mlx.h>
 #define MANDELBROT 0
 #define JULIA 1
+#define TRICORN 2
 
 typedef	struct s_fractal
 {
