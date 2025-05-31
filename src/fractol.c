@@ -91,7 +91,7 @@ void	update_pixel(t_image *img)
 		while (p.y < img->height)
 		{
 			init_c(&c, p, *img, w);
-			i = fractal_choice(c, c, "Julia", img->iter);
+			i = fractal_choice(c, c, "Mandelbrot", img->iter);
 			if (i == img->iter)
 				p.clr = 0xFF000000;
 			else
