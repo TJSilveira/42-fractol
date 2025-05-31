@@ -2,7 +2,7 @@
 
 int	close_win(t_engine *engine)
 {
-	mlx_destroy_window(engine->mlx,engine->window);
+	mlx_destroy_window(engine->mlx, engine->window);
 	exit(0);
 }
 
@@ -16,7 +16,7 @@ void	zoom_manager(t_engine *e)
 	y_len = e->img.top_left.y - e->img.bot_right.y;
 	dist = hypot(x_len, y_len);
 	if (dist > 5.0)
-		e->img.iter = 90;
+		e->img.iter = 80;
 	else if (dist > 3.0)
 		e->img.iter = 100;
 	else if (dist > 1.0)
@@ -44,13 +44,19 @@ int	mouse_wheel(int key, int x, int y, t_engine *e)
 	y_len = e->img.top_left.y - e->img.bot_right.y;
 	x_mou = ((double)x / (double)(e->img.line_len / 4) - 0.5) * x_len;
 	y_mou = (1. - (double)y / (double)e->img.height - 0.5) * y_len;
-
-	/* Move the display to center of the mouse */
 	e->img.top_left.x += x_mou;
 	e->img.top_left.y += y_mou;
 	e->img.bot_right.x += x_mou;
 	e->img.bot_right.y += y_mou;
 	zoom_manager(e);
+	zoom_in_out(key, x_len, y_len, e);
+	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
+	update_pixel(&e->img);
+	return (0);
+}
+
+void	zoom_in_out(int key, double x_len, double y_len, t_engine *e)
+{
 	if (key == 5)
 	{
 		e->img.top_left.x -= x_len * 0.3 / 2.0;
@@ -58,16 +64,13 @@ int	mouse_wheel(int key, int x, int y, t_engine *e)
 		e->img.bot_right.x += x_len * 0.3 / 2.0;
 		e->img.bot_right.y -= y_len * 0.3 / 2.0;
 	}
-	if (key == 4)
+	else if (key == 4)
 	{
 		e->img.top_left.x += x_len * 0.3 / 2.0;
 		e->img.top_left.y -= y_len * 0.3 / 2.0;
 		e->img.bot_right.x -= x_len * 0.3 / 2.0;
 		e->img.bot_right.y += y_len * 0.3 / 2.0;
 	}
-	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
-	update_pixel(&e->img);
-	return (0);
 }
 
 int	key_fig(int key, t_engine *e)
@@ -79,13 +82,5 @@ int	key_fig(int key, t_engine *e)
 	}
 	if (e->img.height == 0)
 		return (0);
-	return (0);
-}
-
-int	resize_window(t_engine *e)
-{
-	init_img(e);
-	update_pixel(&e->img);
-	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
 	return (0);
 }

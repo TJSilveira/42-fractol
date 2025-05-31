@@ -1,28 +1,5 @@
 #include "../includes/fractol.h"
 
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_len + x * (data->pix_bits / 8));
-	*(unsigned int*)dst = color;
-}
-
-int	add_red(int clr, int i, int total_i)
-{
-	clr = clr & 0xFF00FFFF;
-	clr += 0x00FF0000 * ((double)i / (double)total_i - (double)i);
-	return(clr);
-}
-
-void	init_c(t_coor *c, t_pixel p, t_image img, int w)
-{
-	c->y = img.top_left.y + (double)p.y / (double)img.height * \
-			(img.bot_right.y - img.top_left.y);
-	c->x = img.top_left.x + (double)p.x / (double)w * \
-			(img.bot_right.x - img.top_left.x);
-}
-
 void	update_pixel(t_image *img)
 {
 	t_pixel		p;
@@ -31,8 +8,8 @@ void	update_pixel(t_image *img)
 	int			i;
 
 	p.x = 0;
-	w = img->line_len/4;
-	while (p.x < w) 
+	w = img->line_len / 4;
+	while (p.x < w)
 	{
 		p.y = 0;
 		while (p.y < img->height)
@@ -63,31 +40,6 @@ void	init_img(t_engine *e)
 	zoom_manager(e);
 }
 
-void	show_help(void)
-{
-	ft_putstr_fd("\n", 1);
-	ft_putstr_fd(" +--------------- Let me help you! --------------+\n", 1);
-	ft_putstr_fd(" |                                               |\n", 1);
-	ft_putstr_fd(" | Usage: ./bin/fractol [mandelbrot / julia /    |\n", 1);
-	ft_putstr_fd(" |                      tricorn]                 |\n", 1);
-	ft_putstr_fd(" |                                               |\n", 1);
-	ft_putstr_fd(" | e.g: ./bin/fractol mandelbrot                 |\n", 1);
-	ft_putstr_fd(" |                                               |\n", 1);
-	ft_putstr_fd(" |------------------- KEYBOARD ------------------|\n", 1);
-	ft_putstr_fd(" |                                               |\n", 1);
-	ft_putstr_fd(" | Press ESC to close the window                 |\n", 1);
-	ft_putstr_fd(" | Press one of [1-6] to move to another fractal |\n", 1);
-	ft_putstr_fd(" | Press one of [Q-Y] keys to change the color   |\n", 1);
-	ft_putstr_fd(" | Press one of [A-H] keys to change the color   |\n", 1);
-	ft_putstr_fd(" | Use mouse scroll to zoom in and out           |\n", 1);
-	ft_putstr_fd(" | Press the arrow keys to change the viewpoint  |\n", 1);
-	ft_putstr_fd(" | Press L to lock Julia's fractal               |\n", 1);
-	ft_putstr_fd(" | Press Zero to reset the fractal               |\n", 1);
-	ft_putstr_fd(" +-----------------------------------------------+\n", 1);
-	ft_putstr_fd("\n", 1);
-	exit(EXIT_SUCCESS);
-}
-
 void	fractal_option(t_engine *e, char *argv[], int argc)
 {
 	if (ft_strcmp(argv[1], "mandelbrot") == 0 && argc == 2)
@@ -113,7 +65,7 @@ void	fractal_option(t_engine *e, char *argv[], int argc)
 
 void	init_engine(t_engine *e, char *argv[], int argc)
 {
-	char *header;
+	char	*header;
 
 	header = "\"E foi o Éder que os comeu\" - Luís Vaz de Camões";
 	e->mlx = mlx_init();
@@ -138,4 +90,3 @@ int	main(int argc, char *argv[])
 	mlx_loop(eng.mlx);
 	return (0);
 }
-

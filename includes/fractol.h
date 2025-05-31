@@ -8,11 +8,6 @@
 #define TRICORN 2
 #define KEY_ESC 65307
 
-typedef	struct s_fractal
-{
-	/* data */
-}	t_frac;
-
 typedef	struct s_pixel
 {
 	int	x;
@@ -50,24 +45,30 @@ typedef struct s_engine
 }	t_engine;
 
 /* fractol.c */
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
-int	add_red(int clr, int i, int total_i);
-void	init_c(t_coor *c, t_pixel p, t_image img, int w);
 void	update_pixel(t_image *img/*, t_frac f*/);
 void	init_img(t_engine *e);
+void	fractal_option(t_engine *e, char *argv[], int argc);
+void	init_engine(t_engine *e, char *argv[], int argc);
 
 /* fractal_calc.c */
-int	mandelbrot_calc(t_coor zn, t_coor c, int iter);
-int	julia_calc(t_coor zn, t_coor c, int iter);
-int	tricorn_calc(t_coor zn, t_coor c, int iter);
-int	fractal_choice(t_coor zn, t_coor c, t_image *img);
+int		mandelbrot_calc(t_coor zn, t_coor c, int iter);
+int		julia_calc(t_coor zn, t_coor c, int iter);
+int		tricorn_calc(t_coor zn, t_coor c, int iter);
+int		fractal_choice(t_coor zn, t_coor c, t_image *img);
 void	update_c_julia(t_engine *e, double x, double y);
 
 /* events.c */
-int	close_win(t_engine *engine);
+int		close_win(t_engine *engine);
 void	zoom_manager(t_engine *e);
-int	mouse_wheel(int key, int x, int y, t_engine *e);
-int	resize_window(t_engine *e);
-int	key_fig(int key, t_engine *e);
+int		mouse_wheel(int key, int x, int y, t_engine *e);
+void	zoom_in_out(int key, double x_len, double y_len, t_engine *e);
+int		key_fig(int key, t_engine *e);
+
+/* utils.c */
+int		resize_window(t_engine *e);
+int		add_red(int clr, int i, int total_i);
+void	show_help(void);
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
+void	init_c(t_coor *c, t_pixel p, t_image img, int w);
 
 #endif

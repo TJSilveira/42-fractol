@@ -4,7 +4,7 @@ int	mandelbrot_calc(t_coor zn, t_coor c, int iter)
 {
 	int		i;
 	double	temp_x;
-	
+
 	i = 1;
 	zn.x = 0;
 	zn.y = 0;
@@ -14,7 +14,7 @@ int	mandelbrot_calc(t_coor zn, t_coor c, int iter)
 		zn.y = 2. * zn.x * zn.y + c.y;
 		zn.x = temp_x;
 		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
+			break ;
 		i++;
 	}
 	return (i);
@@ -24,7 +24,7 @@ int	julia_calc(t_coor zn, t_coor c, int iter)
 {
 	int		i;
 	double	temp_x;
-	
+
 	i = 1;
 	while (i < iter)
 	{
@@ -32,7 +32,7 @@ int	julia_calc(t_coor zn, t_coor c, int iter)
 		zn.y = 2. * zn.x * zn.y + c.y;
 		zn.x = temp_x;
 		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
+			break ;
 		i++;
 	}
 	return (i);
@@ -42,7 +42,7 @@ int	tricorn_calc(t_coor zn, t_coor c, int iter)
 {
 	int		i;
 	double	temp_x;
-	
+
 	i = 1;
 	zn.x = 0;
 	zn.y = 0;
@@ -52,7 +52,7 @@ int	tricorn_calc(t_coor zn, t_coor c, int iter)
 		zn.y = -2. * zn.x * zn.y + c.y;
 		zn.x = temp_x;
 		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
+			break ;
 		i++;
 	}
 	return (i);
