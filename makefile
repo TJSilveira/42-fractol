@@ -24,7 +24,8 @@ BIN_DIR			= ./bin/
 
 # Source Files
 SRC_FILES = fractol.c \
-			events.c
+			events.c \
+			fractal_calc.c
 
 SRC_FILES_BONUS = 
 

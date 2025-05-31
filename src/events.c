@@ -70,6 +70,18 @@ int	mouse_wheel(int key, int x, int y, t_engine *e)
 	return (0);
 }
 
+int	key_fig(int key, t_engine *e)
+{
+	if (key == KEY_ESC)
+	{
+		close_win(e);
+		exit(0);
+	}
+	if (e->img.height == 0)
+		return (0);
+	return (0);
+}
+
 int	resize_window(t_engine *e)
 {
 	init_img(e);

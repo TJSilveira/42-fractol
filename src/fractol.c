@@ -8,80 +8,11 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	mandelbrot_calc(t_coor zn, t_coor c, int iter)
-{
-	int		i;
-	double	temp_x;
-	
-	i = 1;
-	zn.x = 0;
-	zn.y = 0;
-	while (i < iter)
-	{
-		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
-		zn.y = 2. * zn.x * zn.y + c.y;
-		zn.x = temp_x;
-		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
-		i++;
-	}
-	return (i);
-}
-
-int	julia_calc(t_coor zn, t_coor c, int iter)
-{
-	int		i;
-	double	temp_x;
-	
-	i = 1;
-	while (i < iter)
-	{
-		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
-		zn.y = 2. * zn.x * zn.y + c.y;
-		zn.x = temp_x;
-		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
-		i++;
-	}
-	return (i);
-}
-
-int	tricorn_calc(t_coor zn, t_coor c, int iter)
-{
-	int		i;
-	double	temp_x;
-	
-	i = 1;
-	zn.x = 0;
-	zn.y = 0;
-	while (i < iter)
-	{
-		temp_x = zn.x * zn.x - zn.y * zn.y + c.x;
-		zn.y = -2. * zn.x * zn.y + c.y;
-		zn.x = temp_x;
-		if (zn.x * zn.x + zn.y * zn.y > 20)
-			break;
-		i++;
-	}
-	return (i);
-}
-
 int	add_red(int clr, int i, int total_i)
 {
 	clr = clr & 0xFF00FFFF;
 	clr += 0x00FF0000 * ((double)i / (double)total_i - (double)i);
 	return(clr);
-}
-
-int	fractal_choice(t_coor zn, t_coor c, t_image *img)
-{
-	if (img->fractal_type == MANDELBROT)
-		return (mandelbrot_calc(zn, c, img->iter));
-	else if (img->fractal_type == JULIA)
-		return (julia_calc(zn, img->c_julia, img->iter));
-	else if (img->fractal_type == TRICORN)
-		return (tricorn_calc(zn, c, img->iter));
-	return (0);
 }
 
 void	init_c(t_coor *c, t_pixel p, t_image img, int w)
@@ -138,9 +69,7 @@ void	show_help(void)
 	ft_putstr_fd(" +--------------- Let me help you! --------------+\n", 1);
 	ft_putstr_fd(" |                                               |\n", 1);
 	ft_putstr_fd(" | Usage: ./bin/fractol [mandelbrot / julia /    |\n", 1);
-	ft_putstr_fd(" |                      burning_ship /           |\n", 1);
-	ft_putstr_fd(" |                      tricorn / mandelbox /    |\n", 1);
-	ft_putstr_fd(" |                      celtic_mandelbar]        |\n", 1);
+	ft_putstr_fd(" |                      tricorn]                 |\n", 1);
 	ft_putstr_fd(" |                                               |\n", 1);
 	ft_putstr_fd(" | e.g: ./bin/fractol mandelbrot                 |\n", 1);
 	ft_putstr_fd(" |                                               |\n", 1);
@@ -157,12 +86,6 @@ void	show_help(void)
 	ft_putstr_fd(" +-----------------------------------------------+\n", 1);
 	ft_putstr_fd("\n", 1);
 	exit(EXIT_SUCCESS);
-}
-
-void	update_c_julia(t_engine *e, double x, double y)
-{
-	e->img.c_julia.x = x;
-	e->img.c_julia.y = y;
 }
 
 void	fractal_option(t_engine *e, char *argv[], int argc)
@@ -209,6 +132,7 @@ int	main(int argc, char *argv[])
 	init_engine(&eng, argv, argc);
 	mlx_put_image_to_window(eng.mlx, eng.window, eng.img.img, 0, 0);
 	mlx_mouse_hook(eng.window, mouse_wheel, &eng);
+	mlx_key_hook(eng.window, key_fig, &eng);
 	mlx_expose_hook(eng.window, resize_window, &eng);
 	mlx_hook(eng.window, 17, 0L, close_win, &eng);
 	mlx_loop(eng.mlx);
