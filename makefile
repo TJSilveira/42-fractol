@@ -13,13 +13,13 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
 # Includes
-INCLUDE		= -I ./includes/ -I/usr/include -Imlx_linux -O3
+INCLUDE		= -I ./includes/
 
 # Directories
 SRC_DIR			= ./src/
 SRC_DIR_BONUS	= ./src_bonus/
 OBJS_DIR		= ./objs/
-LIBFT_DIR		= ./libft/
+LIBFT_DIR 		= ./libft/
 BIN_DIR			= ./bin/
 
 # Source Files
@@ -46,7 +46,7 @@ ${NAME}: ${OBJS_DIR} ${BIN_DIR} ${OBJS}
 	@echo ""
 	@echo "$(YELLOW) Preparing fractol... $(RESET)"
 	@${CC} ${CFLAGS} ${OBJS} -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L${LIBFT_DIR} -lft -o ${BIN}
-	@echo "$(LIGHT_GREEN) push_swap successfully compiled.$(RESET)"
+	@echo "$(LIGHT_GREEN) fractol successfully compiled.$(RESET)"
 
 bonus: ${OBJS_DIR} ${OBJS_BONUS}
 	${CC} ${CFLAGS} ${OBJS_BONUS} -L${LIBFT_DIR} -lft -o ${NAME}

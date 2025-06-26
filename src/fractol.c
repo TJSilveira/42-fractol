@@ -19,7 +19,7 @@ void	update_pixel(t_image *img)
 			if (i == img->iter)
 				p.clr = 0xFF000000;
 			else
-				p.clr = add_red(0x0000FF00, i, img->iter);
+				p.clr = add_color_gradient(*img, i);
 			my_mlx_pixel_put(img, p.x, p.y, p.clr);
 			p.y += 1;
 		}
@@ -37,23 +37,25 @@ void	init_img(t_engine *e)
 	e->img.top_left.y = 2;
 	e->img.bot_right.x = 2.0 * e->img.width / e->img.height;
 	e->img.bot_right.y = -2;
+	e->img.main_color = 0x0000FF00; 
+	e->img.secundary_color = 0x00FF0000;
 	zoom_manager(e);
 }
 
 void	fractal_option(t_engine *e, char *argv[], int argc)
 {
-	if (ft_strcmp(argv[1], "mandelbrot") == 0 && argc == 2)
+	if (ft_strncmp(argv[1], "mandelbrot", 10) == 0 && argc == 2)
 		e->img.fractal_type = MANDELBROT;
-	else if (ft_strcmp(argv[1], "julia") == 0)
+	else if (ft_strncmp(argv[1], "julia", 5) == 0)
 	{
 		e->img.fractal_type = JULIA;
 		update_c_julia(e, -0.4, 0.6);
-		if (argc == 3 && ft_strcmp(argv[2], "1") == 0)
+		if (argc == 3 && ft_strncmp(argv[2], "1", 1) == 0)
 			update_c_julia(e, -0.8, 0.156);
-		else if (argc == 3 && ft_strcmp(argv[2], "2") == 0)
+		else if (argc == 3 && ft_strncmp(argv[2], "2", 1) == 0)
 			update_c_julia(e, 0.285, 0.01);
 	}
-	else if (ft_strcmp(argv[1], "tricorn") == 0 && argc == 2)
+	else if (ft_strncmp(argv[1], "tricorn", 7) == 0 && argc == 2)
 		e->img.fractal_type = TRICORN;
 	else
 	{

@@ -73,6 +73,14 @@ void	zoom_in_out(int key, double x_len, double y_len, t_engine *e)
 	}
 }
 
+void	update_color_scheme(t_engine *e, int main, int secundary)
+{
+	e->img.main_color = main;
+	e->img.secundary_color = secundary;
+	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
+	update_pixel(&e->img);
+}
+
 int	key_fig(int key, t_engine *e)
 {
 	if (key == KEY_ESC)
@@ -80,6 +88,27 @@ int	key_fig(int key, t_engine *e)
 		close_win(e);
 		exit(0);
 	}
+	if (key == '0')
+	{
+		e->img.top_left.x = -2.0 * e->img.width / e->img.height;
+		e->img.top_left.y = 2;
+		e->img.bot_right.x = 2.0 * e->img.width / e->img.height;
+		e->img.bot_right.y = -2;
+		mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
+		update_pixel(&e->img);
+	}
+	if (key == 'q')
+		update_color_scheme(e, 0x0000FF00, 0x00FF0000);
+	else if (key == 'w')
+		update_color_scheme(e, 0x0000FF00, 0x000000FF);
+	else if (key == 'e')
+		update_color_scheme(e, 0x00FF0000, 0x0000FF00);
+	else if (key == 'r')
+		update_color_scheme(e, 0x00FF0000, 0x000000FF);
+	else if (key == 't')
+		update_color_scheme(e, 0x000000FF, 0x00FF0000);
+	else if (key == 'y')
+		update_color_scheme(e, 0x000000FF, 0x0000FF00);
 	if (e->img.height == 0)
 		return (0);
 	return (0);

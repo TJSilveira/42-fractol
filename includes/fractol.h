@@ -1,6 +1,6 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
-#include "../includes/libft.h"
+#include "libft.h"
 #include <math.h>
 #include <mlx.h>
 #define MANDELBROT 0
@@ -12,7 +12,7 @@ typedef	struct s_pixel
 {
 	int	x;
 	int	y;
-	int	clr;
+	unsigned int	clr;
 }	t_pixel;
 
 typedef	struct s_coor
@@ -32,6 +32,8 @@ typedef struct s_image
 	int		endian;
 	int		iter;
 	int		fractal_type;
+	unsigned int	main_color;
+	unsigned int	secundary_color;
 	t_coor	c_julia;
 	t_coor	top_left;
 	t_coor	bot_right;
@@ -63,10 +65,11 @@ void	zoom_manager(t_engine *e);
 int		mouse_wheel(int key, int x, int y, t_engine *e);
 void	zoom_in_out(int key, double x_len, double y_len, t_engine *e);
 int		key_fig(int key, t_engine *e);
+void	update_color_scheme(t_engine *e, int main, int secundary);
 
 /* utils.c */
 int		resize_window(t_engine *e);
-int		add_red(int clr, int i, int total_i);
+unsigned int		add_color_gradient(t_image img, int i);
 void	show_help(void);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 void	init_c(t_coor *c, t_pixel p, t_image img, int w);
