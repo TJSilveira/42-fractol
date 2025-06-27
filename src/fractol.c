@@ -44,6 +44,12 @@ void	init_img(t_engine *e)
 	e->img.height = 800;
 	e->img.width = 1200;
 	e->img.img = mlx_new_image(e->mlx, e->img.width, e->img.height);
+	if (!e->img.img)
+	{
+		ft_putstr_fd("Error: Failed to create image\n", 2);
+		cleanup_engine(e);
+		exit(EXIT_FAILURE);
+	}
 	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.pix_bits,
 			&e->img.line_len, &e->img.endian);
 	e->img.top_left.x = -2.0 * e->img.width / e->img.height;
@@ -74,6 +80,7 @@ void	fractal_option(t_engine *e, char *argv[], int argc)
 	{
 		ft_putstr_fd("Error: Option not available.\n", 2);
 		ft_putstr_fd("Type \'./bin/fractol\' to see options\n", 2);
+		cleanup_engine(e);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -85,9 +92,9 @@ void	init_engine(t_engine *e, char *argv[], int argc)
 	header = "\"E foi o Eder que os comeu\" - Luis Vaz de Camoes, 1986";
 	e->mlx = mlx_init();
 	e->window = mlx_new_window(e->mlx, 1200, 800, header);
+	fractal_option(e, argv, argc);
 	init_img(e);
 	update_pixel(&e->img);
-	fractal_option(e, argv, argc);
 }
 
 int	main(int argc, char *argv[])
@@ -96,12 +103,13 @@ int	main(int argc, char *argv[])
 
 	if (argc == 1)
 		show_help();
+	ft_memset(&eng, 0, sizeof(t_engine));
 	init_engine(&eng, argv, argc);
 	mlx_put_image_to_window(eng.mlx, eng.window, eng.img.img, 0, 0);
 	mlx_mouse_hook(eng.window, mouse_wheel, &eng);
 	mlx_key_hook(eng.window, key_fig, &eng);
-	mlx_expose_hook(eng.window, resize_window, &eng);
 	mlx_hook(eng.window, 17, 0L, close_win, &eng);
 	mlx_loop(eng.mlx);
+	cleanup_engine(&eng);
 	return (0);
 }

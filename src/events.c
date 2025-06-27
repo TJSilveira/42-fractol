@@ -14,7 +14,7 @@
 
 int	close_win(t_engine *engine)
 {
-	mlx_destroy_window(engine->mlx, engine->window);
+	cleanup_engine(engine);
 	exit(0);
 }
 
@@ -88,10 +88,7 @@ void	zoom_in_out(int key, double x_len, double y_len, t_engine *e)
 int	key_fig(int key, t_engine *e)
 {
 	if (key == KEY_ESC)
-	{
 		close_win(e);
-		exit(0);
-	}
 	if (key == '0')
 	{
 		e->img.top_left.x = -2.0 * e->img.width / e->img.height;

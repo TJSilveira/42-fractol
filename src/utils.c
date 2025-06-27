@@ -12,14 +12,6 @@
 
 #include "../includes/fractol.h"
 
-int	resize_window(t_engine *e)
-{
-	init_img(e);
-	update_pixel(&e->img);
-	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
-	return (0);
-}
-
 void	show_help(void)
 {
 	ft_putstr_fd("\n", 1);

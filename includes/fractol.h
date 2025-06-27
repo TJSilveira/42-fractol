@@ -81,7 +81,6 @@ void			zoom_in_out(int key, double x_len, double y_len, t_engine *e);
 int				key_fig(int key, t_engine *e);
 
 /* utils.c */
-int				resize_window(t_engine *e);
 void			show_help(void);
 void			my_mlx_pixel_put(t_image *data, int x, int y, int color);
 void			init_c(t_coor *c, t_pixel p, t_image img, int w);
@@ -89,5 +88,7 @@ void			init_c(t_coor *c, t_pixel p, t_image img, int w);
 /* utils_color.c */
 unsigned int	add_color_gradient(t_image img, int i);
 void			update_color_scheme(t_engine *e, int main, int secundary);
+void			cleanup_image(t_engine *e);
+void			cleanup_engine(t_engine *e);
 
 #endif

@@ -30,3 +30,30 @@ unsigned int	add_color_gradient(t_image img, int i)
 		* ((double)i / (double)img.iter - (double)i);
 	return (img.main_color);
 }
+
+void	cleanup_image(t_engine *e)
+{
+	if (!e)
+		return;
+	if (e->img.img && e->mlx)
+	{
+		mlx_destroy_image(e->mlx, e->img.img);
+		e->img.img = NULL;
+	}
+}
+
+void	cleanup_engine(t_engine *e)
+{
+	cleanup_image(e);
+	if (e->window)
+	{
+		mlx_destroy_window(e->mlx, e->window);
+		e->window = NULL;
+	}
+	if (e->mlx)
+	{
+		mlx_destroy_display(e->mlx);
+		free(e->mlx);
+		e->mlx = NULL;
+	}
+}
