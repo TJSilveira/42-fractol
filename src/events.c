@@ -20,17 +20,17 @@ void	zoom_manager(t_engine *e)
 	else if (dist > 3.0)
 		e->img.iter = 100;
 	else if (dist > 1.0)
-		e->img.iter = 200;
+		e->img.iter = 200 - ((e->img.fractal_type == JULIA) * 40);
 	else if (dist > 0.2)
-		e->img.iter = 400;
+		e->img.iter = 400 - ((e->img.fractal_type == JULIA) * 150);
 	else if (dist > 0.05)
-		e->img.iter = 800;
+		e->img.iter = 800 - ((e->img.fractal_type == JULIA) * 400);
 	else if (dist > 0.005)
-		e->img.iter = 1600;
+		e->img.iter = 1600 - ((e->img.fractal_type == JULIA) * 800);
 	else if (dist > 0.0001)
-		e->img.iter = 3200;
+		e->img.iter = 3200 - ((e->img.fractal_type == JULIA) * 2200);
 	else
-		e->img.iter = 6400;
+		e->img.iter = 6400 - ((e->img.fractal_type == JULIA) * 5200);
 }
 
 int	mouse_wheel(int key, int x, int y, t_engine *e)
@@ -94,6 +94,7 @@ int	key_fig(int key, t_engine *e)
 		e->img.top_left.y = 2;
 		e->img.bot_right.x = 2.0 * e->img.width / e->img.height;
 		e->img.bot_right.y = -2;
+		zoom_manager(e);
 		mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
 		update_pixel(&e->img);
 	}

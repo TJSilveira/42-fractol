@@ -13,10 +13,11 @@ unsigned int	add_color_gradient(t_image img, int i)
 	unsigned int	mask;
 
 	mask = ~img.secundary_color;
-	// printf("%X\n", mask);
 	img.main_color = img.main_color & mask;
+	// printf("Mask:%#08X Main before:%#08X ", mask, img.main_color);
 	img.main_color += img.secundary_color
 		* ((double)i / (double)img.iter - (double)i);
+	// printf("Main after:%#08X Secundary:%#08X\n", img.main_color, img.secundary_color);
 	return (img.main_color);
 }
 
