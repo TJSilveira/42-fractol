@@ -1,8 +1,10 @@
 #ifndef FRACTOL_H
 #define FRACTOL_H
-#include "libft.h"
+#include "../libft/libft.h"
 #include <math.h>
-#include <mlx.h>
+#include "../minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx_int.h"
+# include <X11/X.h>
 #define MANDELBROT 0
 #define JULIA 1
 #define TRICORN 2

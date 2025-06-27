@@ -20,6 +20,7 @@ SRC_DIR			= ./src/
 SRC_DIR_BONUS	= ./src_bonus/
 OBJS_DIR		= ./objs/
 LIBFT_DIR 		= ./libft/
+MLX_DIR			= ./minilibx-linux/
 BIN_DIR			= ./bin/
 
 # Source Files
@@ -44,8 +45,14 @@ all: ${NAME}
 # creating executables
 ${NAME}: ${OBJS_DIR} ${BIN_DIR} ${OBJS}
 	@echo ""
+	@echo "$(YELLOW) Compiling libft... $(RESET)"
+	make bonus -C ${LIBFT_DIR}
+	@echo "$(YELLOW) libft Compiled... $(RESET)"
+	@echo "$(YELLOW) Compiling mlx... $(RESET)"
+	make -C ${MLX_DIR}
+	@echo "$(YELLOW) mlx Compiled... $(RESET)"
 	@echo "$(YELLOW) Preparing fractol... $(RESET)"
-	@${CC} ${CFLAGS} ${OBJS} -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -L${LIBFT_DIR} -lft -o ${BIN}
+	@${CC} ${CFLAGS} ${OBJS} -L${MLX_DIR} -L${LIBFT_DIR} -lft -lmlx_Linux -lmlx -lXext -lX11 -lm -o ${BIN}
 	@echo "$(LIGHT_GREEN) fractol successfully compiled.$(RESET)"
 
 bonus: ${OBJS_DIR} ${OBJS_BONUS}
@@ -69,9 +76,11 @@ $(BIN_DIR):
 clean:
 	@echo ""
 	@echo "$(RED)Did someone call - $(ITALIC)pause$(RESET)$(RED) - the Clean-up crew?!$(RESET)"
+	@make clean -C ${LIBFT_DIR}
 	@$ rm -rf $(OBJS_DIR)
 
 fclean: clean
+	@make fclean -C ${LIBFT_DIR}
 	rm -rf $(BIN_DIR) output* ./tests/
 
 re: fclean $(NAME)
