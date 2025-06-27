@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsilveir <tsilveir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 13:21:59 by tsilveir          #+#    #+#             */
+/*   Updated: 2025/06/27 13:22:00 by tsilveir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 void	update_pixel(t_image *img)
@@ -32,12 +44,13 @@ void	init_img(t_engine *e)
 	e->img.height = 800;
 	e->img.width = 1200;
 	e->img.img = mlx_new_image(e->mlx, e->img.width, e->img.height);
-	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.pix_bits, &e->img.line_len, &e->img.endian);
+	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.pix_bits,
+			&e->img.line_len, &e->img.endian);
 	e->img.top_left.x = -2.0 * e->img.width / e->img.height;
 	e->img.top_left.y = 2;
 	e->img.bot_right.x = 2.0 * e->img.width / e->img.height;
 	e->img.bot_right.y = -2;
-	e->img.main_color = 0x0000FF00; 
+	e->img.main_color = 0x0000FF00;
 	e->img.secundary_color = 0x00FF0000;
 	zoom_manager(e);
 }
@@ -69,7 +82,7 @@ void	init_engine(t_engine *e, char *argv[], int argc)
 {
 	char	*header;
 
-	header = "\"E foi o Éder que os comeu\" - Luís Vaz de Camões";
+	header = "\"E foi o Eder que os comeu\" - Luis Vaz de Camoes, 1986";
 	e->mlx = mlx_init();
 	e->window = mlx_new_window(e->mlx, 1200, 800, header);
 	init_img(e);

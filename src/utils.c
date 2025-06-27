@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsilveir <tsilveir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 13:22:06 by tsilveir          #+#    #+#             */
+/*   Updated: 2025/06/27 13:22:07 by tsilveir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 int	resize_window(t_engine *e)
@@ -6,19 +18,6 @@ int	resize_window(t_engine *e)
 	update_pixel(&e->img);
 	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
 	return (0);
-}
-
-unsigned int	add_color_gradient(t_image img, int i)
-{
-	unsigned int	mask;
-
-	mask = ~img.secundary_color;
-	img.main_color = img.main_color & mask;
-	// printf("Mask:%#08X Main before:%#08X ", mask, img.main_color);
-	img.main_color += img.secundary_color
-		* ((double)i / (double)img.iter - (double)i);
-	// printf("Main after:%#08X Secundary:%#08X\n", img.main_color, img.secundary_color);
-	return (img.main_color);
 }
 
 void	show_help(void)
@@ -37,7 +36,7 @@ void	show_help(void)
 	ft_putstr_fd(" |------------------- KEYBOARD ------------------|\n", 1);
 	ft_putstr_fd(" |                                               |\n", 1);
 	ft_putstr_fd(" | Press ESC to close the window                 |\n", 1);
-	ft_putstr_fd(" | Press one of [Q-Y] keys to change the color   |\n", 1);
+	ft_putstr_fd(" | Press one of [q-r] keys to change the color   |\n", 1);
 	ft_putstr_fd(" | Use mouse scroll to zoom in and out           |\n", 1);
 	ft_putstr_fd(" | Press Zero to reset the fractal               |\n", 1);
 	ft_putstr_fd(" +-----------------------------------------------+\n", 1);

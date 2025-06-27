@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tsilveir <tsilveir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 13:21:39 by tsilveir          #+#    #+#             */
+/*   Updated: 2025/06/27 13:21:41 by tsilveir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/fractol.h"
 
 int	close_win(t_engine *engine)
@@ -73,14 +85,6 @@ void	zoom_in_out(int key, double x_len, double y_len, t_engine *e)
 	}
 }
 
-void	update_color_scheme(t_engine *e, int main, int secundary)
-{
-	e->img.main_color = main;
-	e->img.secundary_color = secundary;
-	mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
-	update_pixel(&e->img);
-}
-
 int	key_fig(int key, t_engine *e)
 {
 	if (key == KEY_ESC)
@@ -105,12 +109,6 @@ int	key_fig(int key, t_engine *e)
 	else if (key == 'e')
 		update_color_scheme(e, 0x00FF0000, 0x0000FF00);
 	else if (key == 'r')
-		update_color_scheme(e, 0x00FF0000, 0x000000FF);
-	else if (key == 't')
 		update_color_scheme(e, 0x000000FF, 0x00FF0000);
-	else if (key == 'y')
-		update_color_scheme(e, 0x000000FF, 0x0000FF00);
-	if (e->img.height == 0)
-		return (0);
 	return (0);
 }
