@@ -89,17 +89,17 @@ int	key_fig(int key, t_engine *e)
 {
 	if (key == KEY_ESC)
 		close_win(e);
-	if (key == '0')
-	{
-		e->img.top_left.x = -2.0 * e->img.width / e->img.height;
-		e->img.top_left.y = 2;
-		e->img.bot_right.x = 2.0 * e->img.width / e->img.height;
-		e->img.bot_right.y = -2;
-		zoom_manager(e);
-		mlx_put_image_to_window(e->mlx, e->window, e->img.img, 0, 0);
-		update_pixel(&e->img);
-	}
-	if (key == 'q')
+	else if (key == '0')
+		zoom_reset(e);
+	else if (key == LEFTARROW)
+		arrow_move(e, 0.0, -1.0);
+	else if (key == RIGHTARROW)
+		arrow_move(e, 0.0, 1.0);
+	else if (key == UPARROW)
+		arrow_move(e, 1.0, 0.0);
+	else if (key == DOWNARROW)
+		arrow_move(e, -1.0, 0.0);
+	else if (key == 'q')
 		update_color_scheme(e, 0x0000FF00, 0x00FF0000);
 	else if (key == 'w')
 		update_color_scheme(e, 0x0000FF00, 0x000000FF);
