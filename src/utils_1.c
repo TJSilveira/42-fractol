@@ -29,6 +29,8 @@ void	show_help(void)
 	ft_putstr_fd(" |                                               |\n", 1);
 	ft_putstr_fd(" | Press ESC to close the window                 |\n", 1);
 	ft_putstr_fd(" | Press one of [q-r] keys to change the color   |\n", 1);
+	ft_putstr_fd(" | Use arrows to move                            |\n", 1);
+	ft_putstr_fd(" | Click on a point to recenter to your mouse    |\n", 1);
 	ft_putstr_fd(" | Use mouse scroll to zoom in and out           |\n", 1);
 	ft_putstr_fd(" | Press Zero to reset the fractal               |\n", 1);
 	ft_putstr_fd(" +-----------------------------------------------+\n", 1);
