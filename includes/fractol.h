@@ -96,5 +96,6 @@ unsigned int	add_color_gradient(t_image img, int i);
 void			update_color_scheme(t_engine *e, int main, int secundary);
 void			cleanup_image(t_engine *e);
 void			cleanup_engine(t_engine *e);
+void			error_handler(t_engine *e);
 
 #endif

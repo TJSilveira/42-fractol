@@ -68,21 +68,21 @@ void	fractal_option(t_engine *e, char *argv[], int argc)
 	else if (ft_strncmp(argv[1], "julia", 5) == 0)
 	{
 		e->img.fractal_type = JULIA;
-		update_c_julia(e, -0.4, 0.6);
-		if (argc == 3 && ft_strncmp(argv[2], "1", 1) == 0)
+		if (argc == 2)
+			update_c_julia(e, -0.4, 0.6);
+		else if (argc == 3 && ft_strncmp(argv[2], "1", 1) == 0
+			&& ft_strlen(argv[2]) == 1)
 			update_c_julia(e, -0.8, 0.156);
-		else if (argc == 3 && ft_strncmp(argv[2], "2", 1) == 0)
+		else if (argc == 3 && ft_strncmp(argv[2], "2", 1) == 0
+			&& ft_strlen(argv[2]) == 1)
 			update_c_julia(e, 0.285, 0.01);
+		else
+			error_handler(e);
 	}
 	else if (ft_strncmp(argv[1], "tricorn", 7) == 0 && argc == 2)
 		e->img.fractal_type = TRICORN;
 	else
-	{
-		ft_putstr_fd("Error: Option not available.\n", 2);
-		ft_putstr_fd("Type \'./bin/fractol\' to see options\n", 2);
-		cleanup_engine(e);
-		exit(EXIT_SUCCESS);
-	}
+		error_handler(e);
 }
 
 void	init_engine(t_engine *e, char *argv[], int argc)

@@ -57,3 +57,11 @@ void	cleanup_engine(t_engine *e)
 		e->mlx = NULL;
 	}
 }
+
+void	error_handler(t_engine *e)
+{
+	ft_putstr_fd("Error: Option not available.\n", 2);
+	ft_putstr_fd("Type \'./bin/fractol\' to see options\n", 2);
+	cleanup_engine(e);
+	exit(EXIT_SUCCESS);
+}
